@@ -65,47 +65,58 @@
                     <h4 class="panel-title">讲师信息</h4>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-bordered table-condensed">
-                        <tbody>
-                            <tr>
-                                <th>姓名:</th><td>赵玉川</td>
-                                <th>职位:</th><td colspan="3">讲师</td>
-                                <td rowspan="4" width="128">
-                                    <div class="avatar">
-                                        <img src="./images/default.png" alt="">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>花名:</th><td>麻衣长老</td>
-                                <th>出生日期:</th><td colspan="3">2015-11-13</td>
-                            </tr>
-                            <tr>
-                                <th>性别:</th><td>男</td>
-                                <th>出生日期:</th><td colspan="3">1985-05-25</td>
-                            </tr>
-                            <tr>
-                                <th>手机号码:</th><td colspan="2">13051524959</td>
-                                <th>邮箱:</th><td colspan="2">zhaoyuchuan@itcast.cn</td>
-                            </tr>
-                            <tr>
-                                <th>籍贯:</th><td colspan="6">河北省 保定市 曲阳县</td>
-                            </tr>
-                            <tr>
-                                <td colspan="7">
-                                    <div class="introduce">
-                                        <p>豫章故郡，洪都新府。星分翼轸，地接衡庐。襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。都督阎公之雅望，棨戟遥临；宇文新州之懿范，襜帷暂驻。十旬休假，胜友如云；千里逢迎，高朋满座。腾蛟起凤，孟学士之词宗；紫电青霜，王将军之武库。家君作宰，路出名区；童子何知，躬逢胜饯。</p>
-                                        <p>时维九月，序属三秋。潦水尽而寒潭清，烟光凝而暮山紫。俨骖騑于上路，访风景于崇阿。临帝子之长洲，得仙人之旧馆。层峦耸翠，上出重霄；飞阁流丹，下临无地。鹤汀凫渚，穷岛屿之萦回；桂殿兰宫，列冈峦之体势。</p>
-                                        <p>披绣闼，俯雕甍，山原旷其盈视，川泽纡其骇瞩。闾阎扑地，钟鸣鼎食之家；舸舰迷津，青雀黄龙之舳。云销雨霁，彩彻区明。落霞与孤鹜齐飞，秋水共长天一色。渔舟唱晚，响穷彭蠡之滨，雁阵惊寒，声断衡阳之浦。</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                    <table id="modalInfo" class="table table-bordered table-condensed">
+                        <!-- 挖个坑 -->
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    <script type="text/template" id="modalTpl">
+        <tbody>
+            <tr>
+                <th>姓名:</th><td>{{tc_name}}</td>
+                <th>职位:</th><td colspan="3">讲师</td>
+                <td rowspan="4" width="128">
+                    <div class="avatar">
+                        {{if tc_avatar}}
+                        <img src="{{tc_avatar}}" alt="">
+                        {{else}}
+                        <img src="/public/images/default.png" alt="">
+                        {{/if}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>花名:</th><td>{{tc_roster}}</td>
+                <th>出生日期:</th><td colspan="3">{{tc_birthday}}</td>
+            </tr>
+            <tr>
+                <th>性别:</th><td>
+                    {{if tc_gender == 0}}
+                        男
+                    {{else}}
+                        女
+                    {{/if}}
+                </td>
+                <th>入职日期:</th><td colspan="3">{{tc_join_date}}</td>
+            </tr>
+            <tr>
+                <th>手机号码:</th><td colspan="2">{{tc_cellphone}}</td>
+                <th>邮箱:</th><td colspan="2">{{tc_email}}</td>
+            </tr>
+            <tr>
+                <th>籍贯:</th><td colspan="6">{{tc_hometown}}</td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <div class="introduce">
+                        <p>{{@ tc_introduce}}</p>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </script>
     <script type="text/template" id="teacherTpl">
         {{each list}}
         <tr>
@@ -121,10 +132,10 @@
                 {{/if}}
             </td>
             <td>{{$value.tc_cellphone}}</td>
-            <td>
-                <a href="#teacherModal" data-toggle="modal" class="btn btn-info btn-xs">查 看</a>
+            <td data-tcId='{{$value.tc_id}}'>
+                <a href="javascript:;" class="btn btn-info btn-xs preview">查 看</a>
                 <a href="./teacher_add.html" class="btn btn-info btn-xs">编 辑</a>
-                <a href="javascript::" class="btn btn-warning btn-xs">注 销</a>
+                <a href="javascript:;" class="btn btn-warning btn-xs">注 销</a>
             </td>
         </tr>
         {{/each}}
