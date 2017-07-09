@@ -3,139 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>学IT - 后台管理系统</title>
-    <link rel="stylesheet" href="/public/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/assets/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="/public/assets/nprogress/nprogress.css">
-    <link rel="stylesheet" href="/public/less/index.css">
+    <?php include('/views/common/style.html'); ?>
 </head>
 <body>
     
     <!-- 侧边栏 -->
-    <div class="aside">
-        <!-- 个人资料 -->
-        <div class="profile">
-            <!-- 头像 -->
-            <div class="avatar img-circle">
-                <img src="./uploads/avatar.jpg">
-            </div>
-            <h4>布头儿</h4>
-        </div>
-        <!-- 导航菜单 -->
-        <div class="navs">
-            <ul class="list-unstyled">
-                <li>
-                    <a href="./index.html">
-                        <i class="fa fa-home"></i>
-                        仪表盘
-                    </a>
-                </li>
-                <li>
-                    <a href="./user_list.html">
-                        <i class="fa fa-bell"></i>
-                        用户管理
-                    </a>
-                </li>
-                <li>
-                    <a href="./teacher_list.html" class="active">
-                        <i class="fa fa-bell"></i>
-                        讲师管理
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="fa fa-cog"></i>
-                        课程管理
-                        <i class="arrow fa fa-angle-right"></i>
-                    </a>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="./course_add.html">
-                                 课程添加
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./course_list.html">
-                                课程列表
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./course_category.html">
-                                课程分类
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./course_topic.html">
-                                课程专题
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="./advert_list.html">
-                        <i class="fa fa-bell"></i>
-                        广告管理
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
-                        <i class="fa fa-cog"></i>
-                        系统设置
-                        <i class="arrow fa fa-angle-right"></i>
-                    </a>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="javascript:;">
-                                网站设置
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:;">
-                                 权限管理
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <?php include('/views/common/aside.html'); ?>
     <!-- 主体 -->
     <div class="main">
         <div class="container-fluid">
             <!-- 头部 -->
-            <div class="header">
-                <nav class="navbar navbar-custom">
-                    <div class="navbar-header">
-                        <a href="javascript:;" class="navbar-brand">
-                            <i class="fa fa-navicon"></i>
-                        </a>
-                    </div>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="javascript:;">
-                                <i class="fa fa-bell"></i>
-                                <span class="badge">8</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./settings.html">
-                                <i class="fa fa-user"></i>
-                                个人中心
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:;">
-                                <i class="fa fa-sign-out"></i>
-                                退出
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:;">
-                                <i class="fa fa-tasks"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>          
-            </div>
+            <?php include('/views/common/header.html'); ?>
             <!-- 讲师列表 -->
             <div class="body teacher-list">
                 <!-- 面包屑 -->
@@ -163,26 +41,14 @@
                                 <th>编号</th>
                                 <th>姓名</th>
                                 <th>昵称</th>
-                                <th>年龄</th>
+                                <th>出生日期</th>
                                 <th>性别</th>
                                 <th>手机号码</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>赵玉川</td>
-                                <td>布头儿</td>
-                                <td>28</td>
-                                <td>男</td>
-                                <td>15901256171</td>
-                                <td>
-                                    <a href="#teacherModal" data-toggle="modal" class="btn btn-info btn-xs">查 看</a>
-                                    <a href="./teacher_add.html" class="btn btn-info btn-xs">编 辑</a>
-                                    <a href="javascript::" class="btn btn-warning btn-xs">注 销</a>
-                                </td>
-                            </tr>
+                        <tbody id="teacherInfo">
+                            <!-- 挖个坑 -->
                         </tbody>
                     </table>
                 </div>
@@ -240,10 +106,32 @@
             </div>
         </div>
     </div>
-
-    <script src="./assets/jquery/jquery.min.js"></script>
-    <script src="./assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./assets/nprogress/nprogress.js"></script>
-    <script src="./js/common.js"></script>
+    <script type="text/template" id="teacherTpl">
+        {{each list}}
+        <tr>
+            <td>{{$index + 1}}</td>
+            <td>{{$value.tc_name}}</td>
+            <td>{{$value.tc_roster}}</td>
+            <td>{{$value.tc_birthday}}</td>
+            <td>
+                {{if $value.tc_gender == 0}}
+                    男
+                {{else}}
+                    女
+                {{/if}}
+            </td>
+            <td>{{$value.tc_cellphone}}</td>
+            <td>
+                <a href="#teacherModal" data-toggle="modal" class="btn btn-info btn-xs">查 看</a>
+                <a href="./teacher_add.html" class="btn btn-info btn-xs">编 辑</a>
+                <a href="javascript::" class="btn btn-warning btn-xs">注 销</a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+    <?php include('/views/common/script.html'); ?>
+    <script type="text/javascript">
+        require(['teacher_list']);
+    </script>
 </body>
 </html>
