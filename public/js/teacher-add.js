@@ -15,19 +15,26 @@ define(['jquery','template','util'],function($,template,util){
         data.result.tc_operate = '编辑讲师';
         var html = template('teacherTpl',data.result);
         $('#teacherInfo').html(html);
+        // 绑定表单提交事件
+        $('#addBtn').click(function(){
+            submitForm('/api/teacher/update');
+        });
       }
     });
   }else{
     // 添加讲师
     var html = template('teacherTpl',{tc_operate : '添加讲师',tc_gender : 0});
     $('#teacherInfo').html(html);
+    // 绑定表单提交事件
+    $('#addBtn').click(function(){
+        submitForm('/api/teacher/add');
+    });
   }
-  
-  // 绑定表单提交事件
-  $('#addBtn').click(function(){
+  // 实现表单的提交
+  function submitForm(url){
     $.ajax({
       type : 'post',
-      url : '/api/teacher/add',
+      url : url,
       data : $('#addForm').serialize(),
       dataType : 'json',
       success : function(data){
@@ -36,6 +43,6 @@ define(['jquery','template','util'],function($,template,util){
         }
       }
     });
-  });
+  }
 
 });

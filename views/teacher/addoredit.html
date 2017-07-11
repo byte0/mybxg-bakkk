@@ -27,6 +27,9 @@
         </ol>
         <div class="teacher-add">
             <form id="addForm" class="form-horizontal col-xs-offset-2">
+                {{if tc_id}}
+                    <input type="hidden" name="tc_id" value="{{tc_id}}">
+                {{/if}}
                 <div class="form-group">
                     <label for="" class="col-xs-3 control-label">姓名</label>
                     <div class="col-xs-4">
@@ -69,7 +72,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-xs-7">
-                        <input id="addBtn" type="button" class="btn btn-success btn-sm pull-right" value="添 加">
+                        <input id="addBtn" type="button" class="btn btn-success btn-sm pull-right" value="提 交">
                     </div>                          
                 </div>
             </form>
