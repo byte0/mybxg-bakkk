@@ -22,7 +22,7 @@
                     <li class="active">讲师列表</li>
                 </ol>
                 <div class="page-title">
-                    <a href="./teacher_add.html" class="btn btn-success btn-sm pull-right">添加讲师</a>
+                    <a href="/teacher/addoredit" class="btn btn-success btn-sm pull-right">添加讲师</a>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -134,7 +134,7 @@
             <td>{{$value.tc_cellphone}}</td>
             <td data-tcId='{{$value.tc_id}}' data-tcStatus='{{$value.tc_status}}'>
                 <a href="javascript:;" class="btn btn-info btn-xs preview">查 看</a>
-                <a href="./teacher_add.html" class="btn btn-info btn-xs">编 辑</a>
+                <a href="/teacher/addoredit?tc_id={{$value.tc_id}}" class="btn btn-info btn-xs">编 辑</a>
                 <a href="javascript:;" class="btn btn-warning btn-xs switchBtn">
                     {{if $value.tc_status == 0}}
                         注 销
