@@ -1,4 +1,4 @@
-define(['jquery','template','util','datepicker','language','validate'],function($,template,util){
+define(['jquery','template','util','datepicker','language','validate','form'],function($,template,util){
   /*
     添加或者编辑讲师
   */
@@ -21,25 +21,7 @@ define(['jquery','template','util','datepicker','language','validate'],function(
         // $('#addBtn').click(function(){
         //     submitForm('/api/teacher/update');
         // });
-        $('#addForm').validate({
-          sendForm : false,
-          valid : function(){
-            // 提交表单
-            submitForm('/api/teacher/update');
-          },
-          description : {
-            tc_name : {
-              required : '用户名不能为空'
-            },
-            tc_pass : {
-              required : '密码不能为空',
-              pattern : '密码只能是6位数字'
-            },
-            tc_join_date : {
-              required : '入职日期必须选择'
-            }
-          }
-        });
+        submitForm('/api/teacher/update');
       }
     });
   }else{
@@ -50,11 +32,25 @@ define(['jquery','template','util','datepicker','language','validate'],function(
     // $('#addBtn').click(function(){
     //     submitForm('/api/teacher/add');
     // });
+    submitForm('/api/teacher/add');
+  }
+  // 实现表单的提交
+  function submitForm(url){
     $('#addForm').validate({
       sendForm : false,
       valid : function(){
         // 提交表单
-        submitForm('/api/teacher/add');
+        // submitForm('/api/teacher/add');
+        $('#addForm').ajaxSubmit({
+          type : 'post',
+          url : url,
+          dataType : 'json',
+          success : function(data){
+            if(data.code == 200){
+              location.href = '/teacher/list';
+            }
+          }
+        });
       },
       description : {
         tc_name : {
@@ -70,19 +66,18 @@ define(['jquery','template','util','datepicker','language','validate'],function(
       }
     });
   }
-  // 实现表单的提交
-  function submitForm(url){
-    $.ajax({
-      type : 'post',
-      url : url,
-      data : $('#addForm').serialize(),
-      dataType : 'json',
-      success : function(data){
-        if(data.code == 200){
-          location.href = '/teacher/list';
-        }
-      }
-    });
-  }
+  // function submitForm(url){
+  //   $.ajax({
+  //     type : 'post',
+  //     url : url,
+  //     data : $('#addForm').serialize(),
+  //     dataType : 'json',
+  //     success : function(data){
+  //       if(data.code == 200){
+  //         location.href = '/teacher/list';
+  //       }
+  //     }
+  //   });
+  // }
 
 });
