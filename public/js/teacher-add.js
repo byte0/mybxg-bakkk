@@ -1,4 +1,4 @@
-define(['jquery','template','util'],function($,template,util){
+define(['jquery','template','util','datepicker','language'],function($,template,util){
   /*
     添加或者编辑讲师
   */

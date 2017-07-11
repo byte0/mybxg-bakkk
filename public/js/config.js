@@ -5,6 +5,8 @@ require.config({
     template : 'artTemplate/template-web',
     cookie : 'jquery-cookie/jquery.cookie',
     bootstrap : 'bootstrap/js/bootstrap.min',
+    datepicker : 'bootstrap-datepicker/js/bootstrap-datepicker.min',
+    language : 'bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min',
     common : '../js/common',
     login : '../js/login',
     teacher_list : '../js/teacher-list',
@@ -15,6 +17,9 @@ require.config({
   shim : {
     bootstrap : {
       deps : ['jquery']
+    },
+    language : {
+      deps : ['jquery','datepicker']
     }
   }
 });
