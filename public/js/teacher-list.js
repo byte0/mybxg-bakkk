@@ -1,7 +1,9 @@
-define(['jquery','template','bootstrap'],function($,template){
+define(['jquery','template','util','bootstrap'],function($,template,util){
   /*
     讲师管理
   */
+  // 设置导航菜单选中
+  util.setMenu(location.pathname);
   // 调用接口获取数据，渲染页面
   $.ajax({
     type : 'get',

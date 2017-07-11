@@ -17,8 +17,12 @@ define(['jquery'],function($){
     }
     return obj[key];
   }
-
+  // 设置导航菜单选中
+  function setMenu(pathname){
+    $('.aside .navs a[href="'+pathname+'"]').addClass('active');
+  }
   return {
-    qs : qs
+    qs : qs,
+    setMenu : setMenu
   }
 });
