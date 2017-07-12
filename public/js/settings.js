@@ -1,4 +1,4 @@
-define(['jquery','template','util','editor','uploadify','region'],function($,template,util,CKEDITOR){
+define(['jquery','template','util','editor','uploadify','region','datepicker','language','validate','form'],function($,template,util,CKEDITOR){
   // 设置导航菜单选中
   util.setMenu('/index/index');
   // 查询用户详细信息
@@ -34,6 +34,33 @@ define(['jquery','template','util','editor','uploadify','region'],function($,tem
           { name: 'others', groups: [ 'others' ] },
           { name: 'about', groups: [ 'about' ] }
         ]
+      });
+      // 处理表单验证和提交
+      $('#settingsForm').validate({
+        sendForm : false,
+        valid : function(){
+          // 处理富文本内容更新
+          for(var instance in CKEDITOR.instances){
+            CKEDITOR.instances[instance].updateElement();
+          }
+          // 处理籍贯信息
+          var p = $('#p option:selected').text();
+          var c = $('#c option:selected').text();
+          var d = $('#d option:selected').text();
+          var hometown = p + '|' + c + '|' + d;
+          // 处理表单提交
+          $(this).ajaxSubmit({
+            type : 'post',
+            url : '/api/teacher/modify',
+            data : {tc_hometown : hometown},
+            dataType : 'json',
+            success : function(data){
+              if(data.code == 200){
+                location.reload();
+              }
+            }
+          });
+        }
       });
     }
   });
