@@ -1,4 +1,4 @@
-define(['jquery','template','util','uploadify','region'],function($,template,util){
+define(['jquery','template','util','editor','uploadify','region'],function($,template,util,CKEDITOR){
   // 设置导航菜单选中
   util.setMenu('/index/index');
   // 查询用户详细信息
@@ -25,6 +25,15 @@ define(['jquery','template','util','uploadify','region'],function($,template,uti
       // 处理省市区三级联动
       $('#region').region({
         url : '/public/assets/jquery-region/region.json'
+      });
+      // 处理富文本
+      CKEDITOR.replace('editor',{
+        toolbarGroups : [
+          { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+          { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+          { name: 'others', groups: [ 'others' ] },
+          { name: 'about', groups: [ 'about' ] }
+        ]
       });
     }
   });
