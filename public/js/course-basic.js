@@ -47,13 +47,18 @@ define(['jquery','template','util','editor','validate','form'],function($,templa
       $('#basicForm').validate({
         sendForm : false,
         valid : function(){
+          // 处理富文本编辑操作
+          for(var instance in CKEDITOR.instances){
+            CKEDITOR.instances[instance].updateElement();
+          }
+          // 提交表单
           $(this).ajaxSubmit({
             type : 'post',
             url : '/api/course/update/basic',
             data : {cs_id : csId},
             success : function(data){
               if(data.code == 200){
-                location.href = '/course/picture';
+                location.href = '/course/picture?cs_id=' + data.result.cs_id + '&type=' + type;
               }
             }
           });
