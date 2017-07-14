@@ -64,25 +64,23 @@
                 <div class="title">
                     <h5>基本信息 <small>BASIC INFORMATION</small></h5>
                 </div>
-                <form action="" class="basic form-horizontal">
+                <form id="basicForm" class="basic form-horizontal">
                     <div class="form-group">
                         <label for="" class="col-xs-2 control-label">标题</label>
                         <div class="col-xs-8">
-                            <input type="text" class="form-control input-sm" value="{{cs_name}}">
+                            <input name="cs_name" type="text" class="form-control input-sm" value="{{cs_name}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="" class="col-xs-2 control-label">课程描述</label>
                         <div class="col-xs-8 ckeditor">
-                            <textarea name="" rows="15" class="form-control input-sm">
-                                {{cs_brief}}
-                            </textarea>
+                            <textarea name="cs_brief" id="editor" rows="15" class="form-control input-sm">{{cs_brief}}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="" class="col-xs-2 control-label">讲师</label>
                         <div class="col-xs-8">
-                            <select name="" class="form-control input-sm">
+                            <select name="cs_tc_id" class="form-control input-sm">
                                 <option value="0">请选择讲师</option>
                                 {{each teacher}}
                                     <option value="{{$value.tc_id}}" {{if $value.tc_id==cs_tc_id}}selected{{/if}}>{{$value.tc_name}}</option>
@@ -93,30 +91,34 @@
                     <div class="form-group">
                         <label for="" class="col-xs-2 control-label">分类</label>
                         <div class="col-xs-8">
-                            <select name="" class="form-control input-sm">
+                            <select id="firstType" class="form-control input-sm">
                                 <option value="">请选择一级分类</option>
-                                {{each category.top}}
-                                    <option value="{{$value.cg_id}}" {{if $value.cg_id==cs_cg_pid}}selected{{/if}}>{{$value.cg_name}}</option>
-                                {{/each}}
+                                {{if category}}
+                                    {{each category.top}}
+                                        <option value="{{$value.cg_id}}" {{if $value.cg_id==cs_cg_pid}}selected{{/if}}>{{$value.cg_name}}</option>
+                                    {{/each}}
+                                {{/if}}
                             </select>
-                            <select name="" class="form-control input-sm">
+                            <select name="cs_cg_id" id="secondType" class="form-control input-sm">
                                 <option value="">清选择二级分类</option>
-                                {{each category.childs}}
-                                    <option value="{{$value.cg_id}}" {{if $value.cg_id==cs_cg_id}}selected{{/if}}>{{$value.cg_name}}</option>
-                                {{/each}}
+                                {{if category}}
+                                    {{each category.childs}}
+                                        <option value="{{$value.cg_id}}" {{if $value.cg_id==cs_cg_id}}selected{{/if}}>{{$value.cg_name}}</option>
+                                    {{/each}}
+                                {{/if}}
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="" class="col-xs-2 control-label">标签</label>
                         <div class="col-xs-8">
-                            <input type="text" value="{{cs_tags}}" class="form-control input-sm">
+                            <input name="cs_tags" type="text" value="{{cs_tags}}" class="form-control input-sm">
                             <p class="help-block">将会应用于按标签搜索课程、相关课程的提取等</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-10">
-                            <a href="./course_add_step2.html" class="btn btn-success btn-sm pull-right">保 存</a>
+                            <input type="submit" class="btn btn-success btn-sm pull-right" value="保 存">
                         </div>                          
                     </div>
                 </form>
