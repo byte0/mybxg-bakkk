@@ -18,8 +18,9 @@ define(['jquery','template','util','editor','uploadify','region','datepicker','l
         swf : '/public/assets/uploadify/uploadify.swf',
         uploader : '/api/uploader/avatar',
         onUploadSuccess : function(a,b,c){
+          var obj = JSON.parse(b);
           // 修改图片的地址
-          $('#settingsInfo img').attr('src',b.result.path);
+          $('#settingsInfo img').attr('src',obj.result.path);
         }
       });
       // 处理省市区三级联动
