@@ -13,6 +13,7 @@ require.config({
     region : 'jquery-region/jquery.region',
     editor : 'ckeditor/ckeditor',
     jcrop : 'jcrop/js/Jcrop',
+    nprogress : 'nprogress/nprogress',
     common : '../js/common',
     login : '../js/login',
     teacher_list : '../js/teacher-list',

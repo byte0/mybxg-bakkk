@@ -46,7 +46,7 @@ define(['jquery','template','util','bootstrap','validate','form'],function($,tem
     $('#lessonForm').validate({
       sendForm : false,
       valid : function(){
-        var isfree = $('#freeFlag:checked')?1:0;
+        var isfree = $('#freeFlag:checked').length==1?1:0;
         $(this).ajaxSubmit({
           type : 'post',
           url : url,
