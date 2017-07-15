@@ -1,4 +1,4 @@
-define(['jquery','template','util','uploadify','jcrop'],function($,template,util){
+define(['jquery','template','util','uploadify','jcrop','form'],function($,template,util){
   // 设置导航选中
   util.setMenu('/course/add');
   // 获取课程ID
@@ -18,6 +18,11 @@ define(['jquery','template','util','uploadify','jcrop'],function($,template,util
       // 模板渲染
       var html = template('pictureTpl',data.result);
       $('#pictureInfo').html(html);
+
+      // 获取封面原始图片
+      var pic = $('.preview img');
+      var cropInstance = null;//防止产生多个裁切实例
+
       // 处理文件上传操作
       $('#upfile').uploadify({
         width : 80,
@@ -33,12 +38,10 @@ define(['jquery','template','util','uploadify','jcrop'],function($,template,util
           // var obj = eval('('+b+')');
           var obj = JSON.parse(b);
           $('#pictureInfo .preview img').attr('src',obj.result.path);
+          // 初始化图片裁切
+          cropImage();
         }
       });
-
-      // 获取封面原始图片
-      var pic = $('.preview img');
-      var cropInstance = null;//防止产生多个裁切实例
 
       // 实现图片裁切功能
       function cropImage(){
@@ -74,13 +77,21 @@ define(['jquery','template','util','uploadify','jcrop'],function($,template,util
           // 创建选区
           this.newSelection();
           this.setSelect([x,y,w,h]);
+
+          // 设置默认选区
+          setCropInfo({x:x,y:y,w:w,h:h});
+
           // 记录选区参数信息
           pic.parent().on('cropend',function(a,b,c){
+            setCropInfo(c);
+          });
+          // 设置裁切参数
+          function setCropInfo(c){
             $('#cropInfo input[name="x"]').val(c.x);
             $('#cropInfo input[name="y"]').val(c.y);
             $('#cropInfo input[name="w"]').val(c.w);
             $('#cropInfo input[name="h"]').val(c.h);
-          });
+          }
 
         });
       }
@@ -89,7 +100,17 @@ define(['jquery','template','util','uploadify','jcrop'],function($,template,util
         var cflag = $(this).attr('data-flag');
         if(cflag){
           // 保存图片(就是把选区参数提交到后台)
-
+          $('#cropInfo').ajaxSubmit({
+            type : 'post',
+            url : '/api/course/update/picture',
+            data : {cs_id : csId},
+            dataType : 'json',
+            success : function(data){
+              if(data.code == 200){
+                location.href = '/course/lesson?cs_id=' + data.result.cs_id;
+              }
+            }
+          });
         }else{
           $(this).attr('data-flag','ok');
           $(this).text('保存图片');
