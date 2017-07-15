@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>学IT - 后台管理系统</title>
     <?php include('/views/common/style.html'); ?>
+    <link rel="stylesheet" type="text/css" href="/public/assets/jcrop/css/Jcrop.min.css">
 </head>
 <body>
     
@@ -19,6 +20,12 @@
             </div>
         </div>
     </div>
+    <form id="cropInfo" style="display: none;">
+        <input type="text" name="x">
+        <input type="text" name="y">
+        <input type="text" name="w">
+        <input type="text" name="h">
+    </form>
     <script type="text/template" id="pictureTpl">
         <ol class="breadcrumb">
             <li><a href="javascript:;">课程管理</a></li>
@@ -80,7 +87,7 @@
                         <input type="file" id="upfile">
                     </div>
                     <div class="col-xs-2">
-                        <a href="javascript:;" class="btn btn-warning btn-sm" disabled>裁切图片</a>
+                        <a href="javascript:;" id="cropBtn" class="btn btn-warning btn-sm">裁切图片</a>
                     </div>
                 </div>
             </div>
